@@ -1,0 +1,4 @@
+main: network.monki.utils.Gooey2Plugin
+version: 1.0
+name: Gooey2
+author: Monkipower LLC
