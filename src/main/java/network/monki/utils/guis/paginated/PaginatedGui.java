@@ -72,16 +72,17 @@ public class PaginatedGui extends Gui {
     @Override
     public void updateGui() {
 
+        final int totalPages = getPages();
+
         if(isVariableSize()) {
             // Variable size code
         } else {
             int startFrom = getSlots() - (9 * (currentPage + 1));
-            final int totalPages = getPages();
             for(int slot = 0; slot < getSlots() - 9; slot++) {
                 int x = startFrom + slot;
                 if(getButtons().size() > x) {
                     GuiButton button = getButtons().get(x);
-                    inventory.setItem(x, button);
+                    getInventory().setItem(x, button);
                 } else {
                     break;
                 }
@@ -91,18 +92,18 @@ public class PaginatedGui extends Gui {
         final int s = getSlots() - 9;
         if(currentPage < totalPages) {
             nextPageButton.getButtonUpdater().update(nextPageButton, this);
-            inventory.setItem(s + nextPageButton.getSlot(), nextPageButton);
+            getInventory().setItem(s + nextPageButton.getSlot(), nextPageButton);
         }
 
         if(currentPage != 0) {
             previousPageButton.getButtonUpdater().update(previousPageButton, this);
-            inventory.setItem(s + previousPageButton.getSlot(), previousPageButton);
+            getInventory().setItem(s + previousPageButton.getSlot(), previousPageButton);
         }
     }
 
     public int getPages() {
         int i = 0;
-        while(i * (this.getSize() - 9) < this.getButtons().size()) {
+        while(i * (this.getSlots() - 9) < this.getButtons().size()) {
             i++;
         }
         return i;

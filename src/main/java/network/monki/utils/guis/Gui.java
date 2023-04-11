@@ -4,6 +4,7 @@ import lombok.Data;
 import network.monki.utils.Gooey2Plugin;
 import network.monki.utils.buttons.GuiButton;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -14,22 +15,21 @@ import java.util.List;
 
 public @Data abstract class Gui implements InventoryHolder {
 
-    private String name;
-    private int slots;
-    private boolean autoUpdate, variableSize;
-    private ItemStack background;
-    private Inventory inventory;
-    private List<GuiButton> buttons;
+    public String name;
+    public int slots;
+    public boolean autoUpdate, variableSize;
+    public ItemStack background;
+    public Inventory inventory;
+    public List<GuiButton> buttons;
 
     /***
      * Creates a new GUI with variable slot sizes.
      * @param name
-     * @param slots
      */
     public Gui(String name) {
         this.name = name;
         this.background = null;
-        this.inventory = Bukkit.createInventory(this, slots);
+        this.inventory = Bukkit.createInventory(this, slots, ChatColor.translateAlternateColorCodes('&', name));
         this.buttons = new ArrayList<>();
 
         Gooey2Plugin.getInstance().getGuis().add(this);
@@ -88,8 +88,8 @@ public @Data abstract class Gui implements InventoryHolder {
     }
 
     public void open(Player player) {
-        player.openInventory(getInventory());
         updateGui();
+        player.openInventory(getInventory());
     }
 
     /***

@@ -2,7 +2,6 @@ package network.monki.utils.guis.paginated;
 
 import network.monki.utils.guis.Gui;
 import network.monki.utils.guis.GuiAction;
-import network.monki.utils.guis.PaginatedGuiOld;
 import org.bukkit.entity.Player;
 
 public class GuiNextPageAction implements GuiAction

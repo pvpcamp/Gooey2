@@ -3,6 +3,7 @@ package network.monki.utils;
 import lombok.Getter;
 import network.monki.utils.guis.Gui;
 import network.monki.utils.guis.GuiUpdater;
+import network.monki.utils.listeners.InventoryClickListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -14,17 +15,16 @@ public class Gooey2Plugin extends JavaPlugin {
 
     public static @Getter Gooey2Plugin instance;
     public @Getter List<Gui> guis;
-    public @Getter Logger logger;
 
     @Override
     public void onEnable() {
         instance = this;
         this.guis = new ArrayList<>();
-        logger = Bukkit.getLogger();
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, new GuiUpdater(this), 2, 2);
+        new InventoryClickListener(this);
 
-        logger.info("Gooey2 has been successfully initialized.");
+        getLogger().info("Gooey2 has been successfully initialized.");
     }
 
     @Override

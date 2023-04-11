@@ -1,19 +1,21 @@
 package network.monki.utils.buttons;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import network.monki.utils.guis.GuiAction;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public @Data class GuiButton extends ItemStack {
+public class GuiButton extends ItemStack {
 
-    private String name;
-    private boolean visible;
-    private int slot;
-    private GuiAction action;
-    private AbstractButtonUpdater buttonUpdater;
+    private @Getter @Setter String name;
+    private @Getter @Setter boolean visible;
+    private @Getter @Setter int slot;
+    private @Getter @Setter GuiAction action;
+    private @Getter @Setter AbstractButtonUpdater buttonUpdater;
 
     public GuiButton(Material material) {
         super(material);

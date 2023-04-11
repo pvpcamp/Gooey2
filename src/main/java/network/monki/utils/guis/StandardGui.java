@@ -1,7 +1,14 @@
 package network.monki.utils.guis;
 
 import network.monki.utils.buttons.GuiButton;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StandardGui extends Gui{
 
@@ -12,6 +19,17 @@ public class StandardGui extends Gui{
     @Override
     public void updateGui() {
         Inventory inv = getInventory();
+        final List<HumanEntity> viewers = new ArrayList<>(inv.getViewers());
+        if(inv.getSize() != this.getSlots()) {
+            setInventory(Bukkit.createInventory(this, this.getSlots(), ChatColor.translateAlternateColorCodes('&', getName())));
+            inv = getInventory();
+            for(HumanEntity he : viewers) {
+                if(he instanceof Player) {
+                    Player player = (Player) he;
+                    player.openInventory(inv);
+                }
+            }
+        }
 
         inv.clear();
 
