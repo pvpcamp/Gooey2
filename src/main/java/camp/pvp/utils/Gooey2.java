@@ -10,9 +10,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Gooey2Plugin extends JavaPlugin {
+public class Gooey2 extends JavaPlugin {
 
-    public static @Getter Gooey2Plugin instance;
+    public static @Getter Gooey2 instance;
     public @Getter List<Gui> guis;
 
     @Override

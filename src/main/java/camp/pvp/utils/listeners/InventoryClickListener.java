@@ -1,7 +1,7 @@
 package camp.pvp.utils.listeners;
 
 import camp.pvp.utils.guis.Gui;
-import camp.pvp.utils.Gooey2Plugin;
+import camp.pvp.utils.Gooey2;
 import camp.pvp.utils.buttons.GuiButton;
 import camp.pvp.utils.guis.GuiAction;
 import org.bukkit.Material;
@@ -14,8 +14,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class InventoryClickListener implements Listener {
 
-    private Gooey2Plugin plugin;
-    public InventoryClickListener(Gooey2Plugin plugin) {
+    private Gooey2 plugin;
+    public InventoryClickListener(Gooey2 plugin) {
         this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }

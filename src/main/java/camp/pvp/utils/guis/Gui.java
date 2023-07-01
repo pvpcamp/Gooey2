@@ -1,7 +1,7 @@
 package camp.pvp.utils.guis;
 
 import lombok.Data;
-import camp.pvp.utils.Gooey2Plugin;
+import camp.pvp.utils.Gooey2;
 import camp.pvp.utils.buttons.GuiButton;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -32,7 +32,7 @@ public @Data abstract class Gui implements InventoryHolder {
         this.inventory = Bukkit.createInventory(this, slots, ChatColor.translateAlternateColorCodes('&', name));
         this.buttons = new ArrayList<>();
 
-        Gooey2Plugin.getInstance().getGuis().add(this);
+        Gooey2.getInstance().getGuis().add(this);
 
         this.variableSize = true;
     }
