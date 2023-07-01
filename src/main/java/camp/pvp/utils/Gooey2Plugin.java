@@ -1,15 +1,14 @@
-package network.monki.utils;
+package camp.pvp.utils;
 
+import camp.pvp.utils.guis.Gui;
+import camp.pvp.utils.guis.GuiUpdater;
+import camp.pvp.utils.listeners.InventoryClickListener;
 import lombok.Getter;
-import network.monki.utils.guis.Gui;
-import network.monki.utils.guis.GuiUpdater;
-import network.monki.utils.listeners.InventoryClickListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class Gooey2Plugin extends JavaPlugin {
 

@@ -1,7 +1,6 @@
-package network.monki.utils.guis;
+package camp.pvp.utils.guis;
 
-import network.monki.utils.Gooey2Plugin;
-import network.monki.utils.guis.Gui;
+import camp.pvp.utils.Gooey2Plugin;
 import org.bukkit.inventory.Inventory;
 
 public class GuiUpdater implements Runnable {

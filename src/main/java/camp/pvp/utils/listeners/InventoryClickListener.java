@@ -1,15 +1,14 @@
-package network.monki.utils.listeners;
+package camp.pvp.utils.listeners;
 
-import network.monki.utils.Gooey2Plugin;
-import network.monki.utils.buttons.GuiButton;
-import network.monki.utils.guis.Gui;
-import network.monki.utils.guis.GuiAction;
+import camp.pvp.utils.guis.Gui;
+import camp.pvp.utils.Gooey2Plugin;
+import camp.pvp.utils.buttons.GuiButton;
+import camp.pvp.utils.guis.GuiAction;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 

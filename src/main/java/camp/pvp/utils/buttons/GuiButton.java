@@ -1,9 +1,8 @@
-package network.monki.utils.buttons;
+package camp.pvp.utils.buttons;
 
-import lombok.Data;
+import camp.pvp.utils.guis.GuiAction;
 import lombok.Getter;
 import lombok.Setter;
-import network.monki.utils.guis.GuiAction;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

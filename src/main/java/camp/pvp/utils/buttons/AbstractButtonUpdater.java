@@ -1,6 +1,6 @@
-package network.monki.utils.buttons;
+package camp.pvp.utils.buttons;
 
-import network.monki.utils.guis.Gui;
+import camp.pvp.utils.guis.Gui;
 
 public interface AbstractButtonUpdater {
     void update(GuiButton button, Gui gui);

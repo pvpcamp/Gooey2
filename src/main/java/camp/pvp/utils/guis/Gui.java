@@ -1,8 +1,8 @@
-package network.monki.utils.guis;
+package camp.pvp.utils.guis;
 
 import lombok.Data;
-import network.monki.utils.Gooey2Plugin;
-import network.monki.utils.buttons.GuiButton;
+import camp.pvp.utils.Gooey2Plugin;
+import camp.pvp.utils.buttons.GuiButton;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

@@ -1,4 +1,4 @@
-main: network.monki.utils.Gooey2Plugin
+main: camp.pvp.utils.Gooey2Plugin
 version: 1.0
 name: Gooey2
-author: Monkipower LLC
+author: pvp.camp devs

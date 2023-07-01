@@ -1,7 +1,7 @@
-package network.monki.utils.guis.paginated;
+package camp.pvp.utils.guis.paginated;
 
-import network.monki.utils.guis.Gui;
-import network.monki.utils.guis.GuiAction;
+import camp.pvp.utils.guis.Gui;
+import camp.pvp.utils.guis.GuiAction;
 import org.bukkit.entity.Player;
 
 public class GuiNextPageAction implements GuiAction

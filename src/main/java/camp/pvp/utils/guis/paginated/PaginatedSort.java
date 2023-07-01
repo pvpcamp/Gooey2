@@ -1,4 +1,4 @@
-package network.monki.utils.guis.paginated;
+package camp.pvp.utils.guis.paginated;
 
 public enum PaginatedSort {
     ALPHABETICAL, NONE;

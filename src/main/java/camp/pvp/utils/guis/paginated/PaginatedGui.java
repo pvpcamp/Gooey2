@@ -1,11 +1,9 @@
-package network.monki.utils.guis.paginated;
+package camp.pvp.utils.guis.paginated;
 
-import lombok.Data;
+import camp.pvp.utils.guis.Gui;
 import lombok.Getter;
 import lombok.Setter;
-import network.monki.utils.buttons.AbstractButtonUpdater;
-import network.monki.utils.buttons.GuiButton;
-import network.monki.utils.guis.Gui;
+import camp.pvp.utils.buttons.GuiButton;
 import org.bukkit.Material;
 
 public class PaginatedGui extends Gui {
@@ -33,6 +31,7 @@ public class PaginatedGui extends Gui {
         this.previousPageButton.setAction(new GuiPreviousPageAction());
         this.previousPageButton.setButtonUpdater((button, gui) -> {
             if(gui instanceof PaginatedGui) {
+                PaginatedGui pgui = (PaginatedGui) gui;
                 // Page number code
             }
         });

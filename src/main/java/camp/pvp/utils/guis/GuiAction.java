@@ -1,4 +1,4 @@
-package network.monki.utils.guis;
+package camp.pvp.utils.guis;
 
 import org.bukkit.entity.Player;
 
