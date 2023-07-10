@@ -1,4 +1,4 @@
-main: camp.pvp.utils.Gooey2Plugin
+main: camp.pvp.utils.Gooey2
 version: ${plugin.desc}
 name: Gooey2
 author: pvp.camp
