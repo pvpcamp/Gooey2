@@ -26,7 +26,7 @@ public class InventoryClickListener implements Listener {
         Inventory inventory = event.getClickedInventory();
         ItemStack item = event.getCurrentItem();
 
-        if(inventory.getHolder() instanceof Gui) {
+        if(inventory != null && inventory.getHolder() instanceof Gui) {
 
             if (event.getWhoClicked() instanceof Player) {
 
