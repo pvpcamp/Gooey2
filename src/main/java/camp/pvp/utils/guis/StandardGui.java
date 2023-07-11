@@ -31,10 +31,12 @@ public class StandardGui extends Gui{
             }
         }
 
-        inv.clear();
-
         for(GuiButton button : getButtons()) {
             if(button.isVisible()) {
+                if(button.getButtonUpdater() != null) {
+                    button.getButtonUpdater().update(button, this);
+                }
+
                 inv.setItem(button.getSlot(), button);
             }
         }

@@ -5,10 +5,12 @@ import camp.pvp.utils.Gooey2;
 import camp.pvp.utils.buttons.GuiButton;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +65,18 @@ public @Data abstract class Gui implements InventoryHolder {
         if (update) {
             this.updateGui();
         }
+    }
+
+    public void setBackground(ItemStack item) {
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(" ");
+        item.setItemMeta(meta);
+    }
+
+    public void setDefaultBackground() {
+        ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE);
+        item.setDurability((short) 15);
+        setBackground(item);
     }
 
     /***

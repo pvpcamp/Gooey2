@@ -44,6 +44,9 @@ public class InventoryClickListener implements Listener {
                         action.run(player, gui);
                     }
 
+                    if(button.isCloseOnClick()) {
+                        player.closeInventory();
+                    }
                 }
             }
 
