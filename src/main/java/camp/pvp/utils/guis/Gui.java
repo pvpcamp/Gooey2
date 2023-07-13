@@ -71,6 +71,7 @@ public @Data abstract class Gui implements InventoryHolder {
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(" ");
         item.setItemMeta(meta);
+        this.background = item;
     }
 
     public void setDefaultBackground() {

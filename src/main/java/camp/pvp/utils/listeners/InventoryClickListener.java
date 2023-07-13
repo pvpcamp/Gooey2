@@ -38,14 +38,16 @@ public class InventoryClickListener implements Listener {
                 if(item != null && !item.getType().equals(Material.AIR)) {
 
                     GuiButton button = gui.getButton(event.getSlot());
-                    GuiAction action = button.getAction();
+                    if(button != null) {
+                        GuiAction action = button.getAction();
 
-                    if(action != null) {
-                        action.run(player, gui);
-                    }
+                        if (action != null) {
+                            action.run(player, gui);
+                        }
 
-                    if(button.isCloseOnClick()) {
-                        player.closeInventory();
+                        if (button.isCloseOnClick()) {
+                            player.closeInventory();
+                        }
                     }
                 }
             }
