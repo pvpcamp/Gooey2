@@ -32,6 +32,13 @@ public class StandardGui extends Gui{
         }
 
         for(GuiButton button : getButtons()) {
+            if(button.getSlot() != button.getOldSlot()) {
+                inv.clear();
+                break;
+            }
+        }
+
+        for(GuiButton button : getButtons()) {
             if(button.isVisible()) {
                 if(button.getButtonUpdater() != null) {
                     button.getButtonUpdater().update(button, this);

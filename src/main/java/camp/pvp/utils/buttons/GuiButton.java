@@ -14,7 +14,7 @@ import java.util.List;
 public class GuiButton extends ItemStack {
 
     private @Getter @Setter boolean visible, closeOnClick;
-    private @Getter @Setter int slot;
+    private @Getter @Setter int slot, oldSlot;
     private @Getter @Setter GuiAction action;
     private @Getter @Setter AbstractButtonUpdater buttonUpdater;
 
@@ -22,6 +22,7 @@ public class GuiButton extends ItemStack {
         super(material);
         this.visible = true;
         slot = 0;
+        oldSlot = 0;
     }
     public GuiButton(Material material, String name) {
         this(material);
@@ -38,6 +39,11 @@ public class GuiButton extends ItemStack {
         this(item);
 
         updateName(name);
+    }
+
+    public void setSlot(int slot) {
+        this.oldSlot = this.slot;
+        this.slot = slot;
     }
 
     public void updateName(String name) {
