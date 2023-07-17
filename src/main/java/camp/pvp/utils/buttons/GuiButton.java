@@ -22,7 +22,7 @@ public class GuiButton extends ItemStack {
         super(material);
         this.visible = true;
         slot = 0;
-        oldSlot = 0;
+        oldSlot = -1;
     }
     public GuiButton(Material material, String name) {
         this(material);
@@ -42,7 +42,12 @@ public class GuiButton extends ItemStack {
     }
 
     public void setSlot(int slot) {
-        this.oldSlot = this.slot;
+        if(this.oldSlot == -1) {
+            this.oldSlot = slot;
+        } else {
+            this.oldSlot = getSlot();
+        }
+
         this.slot = slot;
     }
 

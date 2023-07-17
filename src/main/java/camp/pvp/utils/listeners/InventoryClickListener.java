@@ -36,6 +36,9 @@ public class InventoryClickListener implements Listener {
                 event.setCancelled(true);
 
                 if(item != null && !item.getType().equals(Material.AIR)) {
+                    if(gui.getBackground() != null && item.equals(gui.getBackground())) {
+                        return;
+                    }
 
                     GuiButton button = gui.getButton(event.getSlot());
                     if(button != null) {
