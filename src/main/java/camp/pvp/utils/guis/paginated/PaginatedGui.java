@@ -23,7 +23,12 @@ public class PaginatedGui extends Gui {
         this.nextPageButton.setAction(new GuiNextPageAction());
         this.nextPageButton.setButtonUpdater((button, gui) -> {
             if(gui instanceof PaginatedGui) {
-                // Page number code
+                PaginatedGui pgui = (PaginatedGui) gui;
+                if(pgui.getCurrentPage() + 1 < getPages()) {
+                    button.updateName("&aPage " + (pgui.getCurrentPage() + 1));
+                } else {
+                    button.updateName("&cFinal page reached.");
+                }
             }
         });
 
@@ -32,7 +37,11 @@ public class PaginatedGui extends Gui {
         this.previousPageButton.setButtonUpdater((button, gui) -> {
             if(gui instanceof PaginatedGui) {
                 PaginatedGui pgui = (PaginatedGui) gui;
-                // Page number code
+                if(pgui.getCurrentPage() == 0) {
+                    button.updateName("&cFinal page reached.");
+                } else {
+                    button.updateName("&aPage " + (pgui.getCurrentPage() - 1));
+                }
             }
         });
     }
