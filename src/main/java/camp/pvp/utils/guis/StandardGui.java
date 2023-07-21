@@ -19,17 +19,6 @@ public class StandardGui extends Gui{
     @Override
     public void updateGui() {
         Inventory inv = getInventory();
-        final List<HumanEntity> viewers = new ArrayList<>(inv.getViewers());
-        if(inv.getSize() != this.getSlots()) {
-            setInventory(Bukkit.createInventory(this, this.getSlots(), ChatColor.translateAlternateColorCodes('&', getName())));
-            inv = getInventory();
-            for(HumanEntity he : viewers) {
-                if(he instanceof Player) {
-                    Player player = (Player) he;
-                    player.openInventory(inv);
-                }
-            }
-        }
 
         for(GuiButton button : getButtons()) {
             if(button.getSlot() != button.getOldSlot()) {
@@ -54,6 +43,11 @@ public class StandardGui extends Gui{
                     inv.setItem(i, getBackground());
                 }
             }
+        }
+
+        for(HumanEntity player : inv.getViewers()) {
+            Player p = (Player) player;
+            p.updateInventory();
         }
     }
 }

@@ -18,26 +18,11 @@ import java.util.List;
 public @Data abstract class Gui implements InventoryHolder {
 
     public String name;
+    public boolean autoUpdate;
     public int slots;
-    public boolean autoUpdate, variableSize;
     public ItemStack background;
     public Inventory inventory;
     public List<GuiButton> buttons;
-
-    /***
-     * Creates a new GUI with variable slot sizes.
-     * @param name
-     */
-    public Gui(String name) {
-        this.name = name;
-        this.background = null;
-        this.inventory = Bukkit.createInventory(this, slots, ChatColor.translateAlternateColorCodes('&', name));
-        this.buttons = new ArrayList<>();
-
-        Gooey2.getInstance().getGuis().add(this);
-
-        this.variableSize = true;
-    }
 
     /***
      * Creates a new GUI with a specfied amount of slots.
@@ -45,9 +30,9 @@ public @Data abstract class Gui implements InventoryHolder {
      * @param slots
      */
     public Gui(String name, int slots) {
-        this(name);
         this.slots = slots;
-        this.variableSize = false;
+        this.buttons = new ArrayList<>();
+        this.inventory = Bukkit.createInventory(this, slots, ChatColor.translateAlternateColorCodes('&', name));
     }
 
     @Override

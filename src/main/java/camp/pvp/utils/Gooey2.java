@@ -20,7 +20,7 @@ public class Gooey2 extends JavaPlugin {
         instance = this;
         this.guis = new ArrayList<>();
 
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, new GuiUpdater(this), 2, 2);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, new GuiUpdater(this), 0, 5);
         new InventoryClickListener(this);
 
         getLogger().info("Gooey2 has been successfully initialized.");

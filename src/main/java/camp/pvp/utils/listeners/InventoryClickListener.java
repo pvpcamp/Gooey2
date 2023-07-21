@@ -44,12 +44,12 @@ public class InventoryClickListener implements Listener {
                     if(button != null) {
                         GuiAction action = button.getAction();
 
-                        if (action != null) {
-                            action.run(player, gui);
-                        }
-
                         if (button.isCloseOnClick()) {
                             player.closeInventory();
+                        }
+
+                        if (action != null) {
+                            action.run(player, gui);
                         }
                     }
                 }

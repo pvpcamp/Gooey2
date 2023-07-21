@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import camp.pvp.utils.buttons.GuiButton;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 public class PaginatedGui extends Gui {
 
@@ -25,7 +26,7 @@ public class PaginatedGui extends Gui {
             if(gui instanceof PaginatedGui) {
                 PaginatedGui pgui = (PaginatedGui) gui;
                 if(pgui.getCurrentPage() + 1 < getPages()) {
-                    button.updateName("&aPage " + (pgui.getCurrentPage() + 1));
+                    button.updateName("&aPage " + (pgui.getCurrentPage() + 2));
                 } else {
                     button.updateName("&cFinal page reached.");
                 }
@@ -40,40 +41,29 @@ public class PaginatedGui extends Gui {
                 if(pgui.getCurrentPage() == 0) {
                     button.updateName("&cFinal page reached.");
                 } else {
-                    button.updateName("&aPage " + (pgui.getCurrentPage() - 1));
+                    button.updateName("&aPage " + (pgui.getCurrentPage()));
                 }
             }
         });
+
+        this.currentPage = 0;
     }
 
     @Override
     public GuiButton getButton(int slot) {
-
-        if(getSlots() - 9 < slot) {
-            int s = slot - (getSlots() - 10);
-            if(nextPageButton.getSlot() == s) {
-                return nextPageButton;
+        if(slot < 9) {
+            switch(slot) {
+                case 0:
+                    return previousPageButton;
+                case 8:
+                    return nextPageButton;
             }
-
-            if(previousPageButton.getSlot() == s) {
-                return previousPageButton;
-            }
-
-            return null;
-        }
-
-        if(isVariableSize()) {
-            // Variable size code
         } else {
-            int startFrom = getSlots() - (9 * (currentPage + 1));
-            int i = startFrom + slot;
-            if(getButtons().size() > i) {
-                 return getButtons().get(i);
-            } else {
-                return null;
+            int start = slot + (currentPage * (this.getSlots() - 9));
+            if(buttons.size() > start - 9) {
+                return buttons.get(start - 9);
             }
         }
-
         return null;
     }
 
@@ -82,30 +72,40 @@ public class PaginatedGui extends Gui {
 
         final int totalPages = getPages();
 
-        if(isVariableSize()) {
-            // Variable size code
-        } else {
-            int startFrom = getSlots() - (9 * (currentPage + 1));
-            for(int slot = 0; slot < getSlots() - 9; slot++) {
-                int x = startFrom + slot;
-                if(getButtons().size() > x) {
-                    GuiButton button = getButtons().get(x);
-                    getInventory().setItem(x, button);
+        getInventory().clear();
+
+        int start = currentPage * (this.getSlots() - 9);
+        for(int i = 0; i < this.getSlots() - 9; i++) {
+            if(getButtons().size() > start + i) {
+                GuiButton button = this.getButtons().get(start + i);
+                if(button != null) {
+                    if(button.getButtonUpdater() != null) {
+                        button.getButtonUpdater().update(button, this);
+                    }
+
+                    getInventory().setItem(i + 9, button);
                 } else {
                     break;
                 }
+            } else {
+                break;
             }
         }
 
-        final int s = getSlots() - 9;
-        if(currentPage < totalPages) {
-            nextPageButton.getButtonUpdater().update(nextPageButton, this);
-            getInventory().setItem(s + nextPageButton.getSlot(), nextPageButton);
+        for(int x = 0; x < 9; x++) {
+            ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE);
+            item.setDurability((short) 15);
+            getInventory().setItem(x, item);
         }
 
-        if(currentPage != 0) {
+        if(currentPage + 1 < totalPages) {
+            nextPageButton.getButtonUpdater().update(nextPageButton, this);
+            getInventory().setItem(8, nextPageButton);
+        }
+
+        if(currentPage > 0) {
             previousPageButton.getButtonUpdater().update(previousPageButton, this);
-            getInventory().setItem(s + previousPageButton.getSlot(), previousPageButton);
+            getInventory().setItem(0, previousPageButton);
         }
     }
 
