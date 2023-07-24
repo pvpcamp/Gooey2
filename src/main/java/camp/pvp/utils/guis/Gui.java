@@ -33,6 +33,7 @@ public @Data abstract class Gui implements InventoryHolder {
         this.slots = slots;
         this.buttons = new ArrayList<>();
         this.inventory = Bukkit.createInventory(this, slots, ChatColor.translateAlternateColorCodes('&', name));
+        Gooey2.getInstance().getGuis().add(this);
     }
 
     @Override

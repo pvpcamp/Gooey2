@@ -1,6 +1,8 @@
 package camp.pvp.utils.guis;
 
 import camp.pvp.utils.Gooey2;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 public class GuiUpdater implements Runnable {

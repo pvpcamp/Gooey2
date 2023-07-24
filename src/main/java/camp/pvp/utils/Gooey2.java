@@ -20,7 +20,7 @@ public class Gooey2 extends JavaPlugin {
         instance = this;
         this.guis = new ArrayList<>();
 
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, new GuiUpdater(this), 0, 5);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, new GuiUpdater(this), 2, 2);
         new InventoryClickListener(this);
 
         getLogger().info("Gooey2 has been successfully initialized.");
@@ -29,10 +29,6 @@ public class Gooey2 extends JavaPlugin {
     @Override
     public void onDisable() {
         instance = null;
-    }
-
-    public void createGui() {
-
     }
 
 }
