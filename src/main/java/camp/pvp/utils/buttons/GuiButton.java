@@ -67,4 +67,15 @@ public class GuiButton extends ItemStack {
         meta.setLore(list);
         this.setItemMeta(meta);
     }
+
+    public void setLore(List<String> l) {
+        ItemMeta meta = this.getItemMeta();
+        List<String> list = new ArrayList<>();
+        for(String s : l) {
+            list.add(ChatColor.translateAlternateColorCodes('&', s));
+        }
+
+        meta.setLore(list);
+        this.setItemMeta(meta);
+    }
 }
