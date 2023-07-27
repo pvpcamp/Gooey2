@@ -13,14 +13,12 @@ import java.util.List;
 public class Gooey2 extends JavaPlugin {
 
     public static @Getter Gooey2 instance;
-    public @Getter List<Gui> guis;
 
     @Override
     public void onEnable() {
         instance = this;
-        this.guis = new ArrayList<>();
 
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, new GuiUpdater(this), 2, 2);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, new GuiUpdater(this), 0, 4);
         new InventoryClickListener(this);
 
         getLogger().info("Gooey2 has been successfully initialized.");

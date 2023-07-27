@@ -123,7 +123,7 @@ public class PaginatedGui extends Gui {
     }
 
     public boolean nextPage() {
-        if(currentPage < getPages()) {
+        if(currentPage + 1 < getPages()) {
             goToPage(currentPage + 1);
             return true;
         } else {
