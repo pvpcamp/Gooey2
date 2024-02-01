@@ -46,13 +46,18 @@ public class StandardGui extends Gui{
             if(border) {
                 for (int row = 0; row < rows; row++) {
                     for (int column = 0; column < 9; column++) {
+                        int slot = (row * 9) + column;
                         if (row == 0 || row + 1 == rows) {
-                            inv.setItem((row * 9) + column, getBackground());
+                            if (inv.getItem(slot) == null) {
+                                inv.setItem((row * 9) + column, getBackground());
+                            }
                             continue;
                         }
 
                         if (column == 0 || column == 8) {
-                            inv.setItem((row * 9) + column, getBackground());
+                            if (inv.getItem(slot) == null) {
+                                inv.setItem(slot, getBackground());
+                            }
                         }
                     }
                 }
