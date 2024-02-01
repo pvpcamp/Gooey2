@@ -13,7 +13,7 @@ import java.util.List;
 
 public class GuiButton extends ItemStack {
 
-    private @Getter @Setter boolean visible, closeOnClick;
+    private @Getter @Setter boolean visible, closeOnClick, overrideGuiArrangement;
     private @Getter @Setter int slot, oldSlot;
     private @Getter @Setter GuiAction action;
     private @Getter @Setter AbstractButtonUpdater buttonUpdater;

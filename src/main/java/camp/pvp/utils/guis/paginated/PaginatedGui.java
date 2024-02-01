@@ -6,6 +6,7 @@ import lombok.Setter;
 import camp.pvp.utils.buttons.GuiButton;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class PaginatedGui extends Gui {
 
@@ -95,6 +96,10 @@ public class PaginatedGui extends Gui {
         for(int x = 0; x < 9; x++) {
             ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE);
             item.setDurability((short) 15);
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(" ");
+            item.setItemMeta(meta);
+
             getInventory().setItem(x, item);
         }
 

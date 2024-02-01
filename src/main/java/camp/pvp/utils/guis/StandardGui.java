@@ -1,16 +1,18 @@
 package camp.pvp.utils.guis;
 
 import camp.pvp.utils.buttons.GuiButton;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class StandardGui extends Gui{
+
+    @Getter @Setter
+    private boolean border, arrangeInOrder;
 
     public StandardGui(String name, int slots) {
         super(name, slots);
@@ -18,6 +20,7 @@ public class StandardGui extends Gui{
 
     @Override
     public void updateGui() {
+
         Inventory inv = getInventory();
 
         for(GuiButton button : getButtons()) {
@@ -38,9 +41,26 @@ public class StandardGui extends Gui{
         }
 
         if(getBackground() != null) {
-            for(int i = 0; i < inv.getSize(); i++) {
-                if(inv.getItem(i) == null) {
-                    inv.setItem(i, getBackground());
+            final int rows = slots / 9;
+
+            if(border) {
+                for (int row = 0; row < rows; row++) {
+                    for (int column = 0; column < 9; column++) {
+                        if (row == 0 || row + 1 == rows) {
+                            inv.setItem((row * 9) + column, getBackground());
+                            continue;
+                        }
+
+                        if (column == 0 || column == 8) {
+                            inv.setItem((row * 9) + column, getBackground());
+                        }
+                    }
+                }
+            } else {
+                for (int i = 0; i < inv.getSize(); i++) {
+                    if (inv.getItem(i) == null) {
+                        inv.setItem(i, getBackground());
+                    }
                 }
             }
         }
@@ -49,5 +69,10 @@ public class StandardGui extends Gui{
             Player p = (Player) player;
             p.updateInventory();
         }
+    }
+
+    public void setDefaultBorder() {
+        setDefaultBackground();
+        border = true;
     }
 }

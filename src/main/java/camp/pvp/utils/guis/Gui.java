@@ -6,6 +6,7 @@ import camp.pvp.utils.buttons.GuiButton;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -32,6 +33,7 @@ public @Data abstract class Gui implements InventoryHolder {
     public Gui(String name, int slots) {
         this.slots = slots;
         this.buttons = new ArrayList<>();
+        this.name = name;
         this.inventory = Bukkit.createInventory(this, slots, ChatColor.translateAlternateColorCodes('&', name));
     }
 
@@ -85,6 +87,29 @@ public @Data abstract class Gui implements InventoryHolder {
         }
 
         return null;
+    }
+
+    /***
+     * Updates the amount of slots in the GUI.
+     * This will also close the GUI for all players viewing it,
+     * and reopen it with the new amount of slots.
+     * @param slots
+     */
+    public void updateSlots(int slots) {
+        List<Player> players = new ArrayList<>();
+        for(HumanEntity player : inventory.getViewers()) {
+            Player p = (Player) player;
+            players.add(p);
+            p.closeInventory();
+        }
+
+        this.slots = slots;
+
+        inventory = Bukkit.createInventory(this, slots, ChatColor.translateAlternateColorCodes('&', name));
+
+        for(Player player : players) {
+            open(player);
+        }
     }
 
     public void open(Player player) {
