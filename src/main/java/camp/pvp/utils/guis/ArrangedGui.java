@@ -49,7 +49,10 @@ public class ArrangedGui extends StandardGui{
 
             GuiButton button = buttonQueue.poll();
 
-            if(button.isOverrideGuiArrangement()) continue;
+            if(button.isOverrideGuiArrangement()) {
+                i--;
+                continue;
+            }
 
             button.setSlot(i);
         }
