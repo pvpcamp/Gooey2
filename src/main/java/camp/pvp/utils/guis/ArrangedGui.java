@@ -41,7 +41,14 @@ public class ArrangedGui extends StandardGui{
 
         updateSlots((count + (isBorder() ? 2 : 0)) * 9);
 
-        for (int i = isBorder() ? 10 : 0; i <= 53; i++) {
+        List<Integer> occupiedSlots = new LinkedList<>();
+        for(GuiButton button : getButtons()) {
+            if(button.isOverrideGuiArrangement()) {
+                occupiedSlots.add(button.getSlot());
+            }
+        }
+
+        for (int i = isBorder() ? 10 : 0; i < 54; i++) {
 
             if(isBorder() && skipNumbers.contains(i)) continue;
 
@@ -52,6 +59,21 @@ public class ArrangedGui extends StandardGui{
             if(button.isOverrideGuiArrangement()) {
                 i--;
                 continue;
+            }
+
+            boolean isOccupied = occupiedSlots.contains(i);
+            if(isOccupied) {
+                for(int o = i; o < 55; o++) {
+
+                    if(o == 54) {
+                        return;
+                    }
+
+                    if(!occupiedSlots.contains(o)) {
+                        i = o;
+                        break;
+                    }
+                }
             }
 
             button.setSlot(i);

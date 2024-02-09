@@ -8,10 +8,14 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PaginatedGui extends Gui {
 
     private @Getter @Setter int currentPage;
     private @Getter @Setter GuiButton nextPageButton, previousPageButton;
+    private @Getter List<GuiButton> navigationButtons = new ArrayList<>();
 
     /***
      * Creates a new GUI and imports it into the Gooey2 list.
@@ -50,6 +54,14 @@ public class PaginatedGui extends Gui {
         this.currentPage = 0;
     }
 
+    /***
+     * Adds a button to the navigation bar.
+     * @param button
+     */
+    public void addNavigationButton(GuiButton button) {
+        navigationButtons.add(button);
+    }
+
     @Override
     public GuiButton getButton(int slot) {
         if(slot < 9) {
@@ -58,6 +70,12 @@ public class PaginatedGui extends Gui {
                     return previousPageButton;
                 case 8:
                     return nextPageButton;
+                default:
+                    for(GuiButton button : getNavigationButtons()) {
+                        if(button.getSlot() == slot) {
+                            return button;
+                        }
+                    }
             }
         } else {
             int start = slot + (currentPage * (this.getSlots() - 9));
@@ -78,7 +96,8 @@ public class PaginatedGui extends Gui {
         int start = currentPage * (this.getSlots() - 9);
         for(int i = 0; i < this.getSlots() - 9; i++) {
             if(getButtons().size() > start + i) {
-                GuiButton button = this.getButtons().get(start + i);
+                GuiButton button = getButtons().get(start + i);
+
                 if(button != null) {
                     if(button.getButtonUpdater() != null) {
                         button.getButtonUpdater().update(button, this);
@@ -102,6 +121,11 @@ public class PaginatedGui extends Gui {
 
             getInventory().setItem(x, item);
         }
+
+        for(GuiButton button : getNavigationButtons()) {
+            getInventory().setItem(button.getSlot(), button);
+        }
+
 
         if(currentPage + 1 < totalPages) {
             nextPageButton.getButtonUpdater().update(nextPageButton, this);

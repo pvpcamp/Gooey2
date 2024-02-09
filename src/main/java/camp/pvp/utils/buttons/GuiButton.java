@@ -23,6 +23,7 @@ public class GuiButton extends ItemStack {
         this.visible = true;
         slot = 0;
         oldSlot = -1;
+        this.overrideGuiArrangement = false;
     }
     public GuiButton(Material material, String name) {
         this(material);
@@ -33,6 +34,7 @@ public class GuiButton extends ItemStack {
         super(item);
 
         this.visible = true;
+        this.overrideGuiArrangement = false;
     }
 
     public GuiButton(ItemStack item, String name) {

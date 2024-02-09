@@ -49,7 +49,7 @@ public class InventoryClickListener implements Listener {
                         }
 
                         if (action != null) {
-                            action.run(player, gui);
+                            action.run(player, button, gui, event.getClick());
                         }
                     }
                 }

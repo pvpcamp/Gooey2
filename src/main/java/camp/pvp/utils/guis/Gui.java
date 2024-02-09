@@ -26,7 +26,7 @@ public @Data abstract class Gui implements InventoryHolder {
     public List<GuiButton> buttons;
 
     /***
-     * Creates a new GUI with a specfied amount of slots.
+     * Creates a new GUI with a specified amount of slots.
      * @param name
      * @param slots
      */
@@ -43,15 +43,25 @@ public @Data abstract class Gui implements InventoryHolder {
     }
 
     /***
-     * Adds a button to the GUI at the next available position.
+     * Adds a button to the GUI. Optionally updates the GUI as well.
      * @param button
      * @param update
+     * @deprecated Use {@link #addButton(GuiButton)} instead. If you need to update the GUI, use {@link #updateGui()}.
      */
+    @Deprecated
     public void addButton(GuiButton button, boolean update) {
         buttons.add(button);
         if (update) {
             this.updateGui();
         }
+    }
+
+    /***
+     * Adds a button to the GUI.
+     * @param button The button you want to add.
+     */
+    public void addButton(GuiButton button) {
+        buttons.add(button);
     }
 
     public void setBackground(ItemStack item) {
@@ -68,16 +78,23 @@ public @Data abstract class Gui implements InventoryHolder {
     }
 
     /***
-     * Removed a specified button from the GUI.
+     * Removes the specified button from the GUI.
      * @param button
      * @param update
+     * @deprecated Use {@link #removeButton(GuiButton)} instead. If you need to update the GUI, use {@link #updateGui()}.
      */
+    @Deprecated
     public void removeButton(GuiButton button, boolean update) {
         buttons.remove(button);
         if (update) {
             this.updateGui();
         }
     }
+
+    public void removeButton(GuiButton button) {
+        buttons.remove(button);
+    }
+
 
     public GuiButton getButton(int slot) {
         for(GuiButton button : getButtons()) {
@@ -112,6 +129,10 @@ public @Data abstract class Gui implements InventoryHolder {
         }
     }
 
+    /***
+     * Opens the GUI for a specified player, as well as updates all of the buttons within the GUI.
+     * @param player
+     */
     public void open(Player player) {
         updateGui();
         player.openInventory(getInventory());
