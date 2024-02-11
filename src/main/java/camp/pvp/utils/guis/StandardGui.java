@@ -12,7 +12,7 @@ import java.util.*;
 public class StandardGui extends Gui{
 
     @Getter @Setter
-    private boolean border, arrangeInOrder;
+    private boolean border, navigationBar, arrangeInOrder;
 
     public StandardGui(String name, int slots) {
         super(name, slots);
@@ -62,7 +62,7 @@ public class StandardGui extends Gui{
                     }
                 }
             } else {
-                for (int i = 0; i < inv.getSize(); i++) {
+                for (int i = 0; i < (isNavigationBar() ? 9 : inv.getSize()); i++) {
                     if (inv.getItem(i) == null) {
                         inv.setItem(i, getBackground());
                     }
@@ -79,5 +79,12 @@ public class StandardGui extends Gui{
     public void setDefaultBorder() {
         setDefaultBackground();
         border = true;
+        navigationBar = false;
+    }
+
+    public void setDefaultNavigationBar() {
+        setDefaultBackground();
+        border = false;
+        navigationBar = true;
     }
 }

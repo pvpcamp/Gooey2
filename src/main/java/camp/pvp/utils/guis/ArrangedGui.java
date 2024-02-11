@@ -39,7 +39,7 @@ public class ArrangedGui extends StandardGui{
             if(buttonSize == 0) break;
         }
 
-        updateSlots((count + (isBorder() ? 2 : 0)) * 9);
+        updateSlots((count + (isBorder() ? 2 : (isNavigationBar() ? 1 : 0))) * 9);
 
         List<Integer> occupiedSlots = new LinkedList<>();
         for(GuiButton button : getButtons()) {
@@ -48,7 +48,13 @@ public class ArrangedGui extends StandardGui{
             }
         }
 
-        for (int i = isBorder() ? 10 : 0; i < 54; i++) {
+        int startFrom = isBorder() ? 10 : 0;
+
+        if(!isBorder()) {
+            startFrom = isNavigationBar() ? 9 : 0;
+        }
+
+        for (int i = startFrom; i < 54; i++) {
 
             if(isBorder() && skipNumbers.contains(i)) continue;
 
@@ -77,6 +83,7 @@ public class ArrangedGui extends StandardGui{
             }
 
             button.setSlot(i);
+            button.setOldSlot(i);
         }
     }
 }
