@@ -4,18 +4,20 @@ import camp.pvp.utils.guis.Gui;
 import camp.pvp.utils.Gooey2;
 import camp.pvp.utils.buttons.GuiButton;
 import camp.pvp.utils.guis.GuiAction;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class InventoryClickListener implements Listener {
+public class InventoryListeners implements Listener {
 
     private Gooey2 plugin;
-    public InventoryClickListener(Gooey2 plugin) {
+    public InventoryListeners(Gooey2 plugin) {
         this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
@@ -55,6 +57,21 @@ public class InventoryClickListener implements Listener {
                 }
             }
 
+        }
+    }
+
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent event) {
+        Inventory inventory = event.getInventory();
+        if(inventory != null && inventory.getHolder() instanceof Gui gui) {
+
+            if(gui.getCloseAction() == null) {
+                return;
+            }
+
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                gui.getCloseAction().run((Player) event.getPlayer(), gui);
+            }, 1L);
         }
     }
 }

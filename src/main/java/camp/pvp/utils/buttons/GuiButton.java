@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -79,5 +81,14 @@ public class GuiButton extends ItemStack {
 
         meta.setLore(list);
         this.setItemMeta(meta);
+    }
+
+    public void addGlowing() {
+        this.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+        this.getItemMeta().addItemFlags(ItemFlag.HIDE_ENCHANTS);
+    }
+
+    public void removeGlowing() {
+        this.removeEnchantment(Enchantment.DURABILITY);
     }
 }

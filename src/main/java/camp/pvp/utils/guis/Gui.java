@@ -24,6 +24,7 @@ public @Data abstract class Gui implements InventoryHolder {
     public ItemStack background;
     public Inventory inventory;
     public List<GuiButton> buttons;
+    public GuiCloseAction closeAction;
 
     /***
      * Creates a new GUI with a specified amount of slots.
