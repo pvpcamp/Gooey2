@@ -26,7 +26,11 @@ public class ArrangedGui extends StandardGui{
 
         Queue<GuiButton> buttonQueue = new LinkedList<>(getButtons());
 
-        int count = 0, divisor = isBorder() ? 7 : 9, buttonSize = buttonQueue.size();
+        int count = 0, divisor = isBorder() ? 7 : 9, buttonSize = 0;
+
+        for(GuiButton button : getButtons()) {
+            if(!button.isOverrideGuiArrangement()) buttonSize++;
+        }
 
         while(buttonSize % divisor != 0) {
             buttonSize++;
