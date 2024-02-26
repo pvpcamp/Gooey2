@@ -41,7 +41,7 @@ public class StandardGui extends Gui{
         }
 
         if(getBackground() != null) {
-            final int rows = slots / 9;
+            final int rows = getSlots() / 9;
 
             if(border) {
                 for (int row = 0; row < rows; row++) {

@@ -38,21 +38,17 @@ public class InventoryListeners implements Listener {
                 event.setCancelled(true);
 
                 if(item != null && !item.getType().equals(Material.AIR)) {
-                    if(gui.getBackground() != null && item.equals(gui.getBackground())) {
-                        return;
-                    }
 
                     GuiButton button = gui.getButton(event.getSlot());
+
                     if(button != null) {
                         GuiAction action = button.getAction();
 
-                        if (button.isCloseOnClick()) {
-                            player.closeInventory();
-                        }
+                        if (button.isCloseOnClick()) player.closeInventory();
 
-                        if (action != null) {
-                            action.run(player, button, gui, event.getClick());
-                        }
+                        if (action != null) action.run(player, button, gui, event.getClick());
+
+                        if(gui.getClickSound() != null) player.playSound(player.getLocation(), gui.getClickSound(), 1F, 1F);
                     }
                 }
             }
@@ -65,9 +61,10 @@ public class InventoryListeners implements Listener {
         Inventory inventory = event.getInventory();
         if(inventory != null && inventory.getHolder() instanceof Gui gui) {
 
-            if(gui.getCloseAction() == null) {
-                return;
-            }
+            if(gui.getCloseSound() != null && event.getPlayer() instanceof Player player)
+                player.playSound(player.getLocation(), gui.getCloseSound(), 1F, 1F);
+
+            if(gui.getCloseAction() == null) return;
 
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 gui.getCloseAction().run((Player) event.getPlayer(), gui);

@@ -6,6 +6,7 @@ import camp.pvp.utils.buttons.GuiButton;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -18,13 +19,14 @@ import java.util.List;
 
 public @Data abstract class Gui implements InventoryHolder {
 
-    public String name;
-    public boolean autoUpdate;
-    public int slots;
-    public ItemStack background;
-    public Inventory inventory;
-    public List<GuiButton> buttons;
-    public GuiCloseAction closeAction;
+    private String name;
+    private boolean autoUpdate;
+    private int slots;
+    private ItemStack background;
+    private Inventory inventory;
+    private List<GuiButton> buttons;
+    private Sound openSound, clickSound, closeSound;
+    private GuiCloseAction closeAction;
 
     /***
      * Creates a new GUI with a specified amount of slots.
@@ -32,6 +34,11 @@ public @Data abstract class Gui implements InventoryHolder {
      * @param slots
      */
     public Gui(String name, int slots) {
+
+        if(slots > 54 || slots < 9 || slots % 9 != 0) {
+            throw new IllegalArgumentException("Slots must be a multiple of 9. (9, 18, 27, 36, 45, 54)");
+        }
+
         this.slots = slots;
         this.buttons = new ArrayList<>();
         this.name = name;
@@ -114,6 +121,11 @@ public @Data abstract class Gui implements InventoryHolder {
      * @param slots
      */
     public void updateSlots(int slots) {
+
+        if(slots % 9 != 0 || slots < 9 || slots > 54) {
+            throw new IllegalArgumentException("Slots must be a multiple of 9. (9, 18, 27, 36, 45, 54)");
+        }
+
         List<Player> players = new ArrayList<>();
         for(HumanEntity player : inventory.getViewers()) {
             Player p = (Player) player;
@@ -131,12 +143,16 @@ public @Data abstract class Gui implements InventoryHolder {
     }
 
     /***
-     * Opens the GUI for a specified player, as well as updates all of the buttons within the GUI.
+     * Opens the GUI for a specified player, as well as updates all the buttons within the GUI.
      * @param player
      */
     public void open(Player player) {
         updateGui();
         player.openInventory(getInventory());
+
+        if(openSound != null) {
+            player.playSound(player.getLocation(), openSound, 1, 1);
+        }
     }
 
     /***

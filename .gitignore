@@ -27,3 +27,4 @@ replay_pid*
 *idea
 *.iml
 *target
+src/main/resources/META-INF/MANIFEST.MF

@@ -9,9 +9,8 @@ import org.bukkit.event.inventory.ClickType;
 public class GuiPreviousPageAction implements GuiAction {
     @Override
     public void run(Player player, GuiButton button, Gui gui, ClickType click) {
-        if(gui instanceof PaginatedGui) {
-            PaginatedGui pgui = (PaginatedGui) gui;
-            pgui.previousPage();
+        if(gui instanceof PaginatedGui paginatedGui) {
+            paginatedGui.previousPage();
         }
     }
 }

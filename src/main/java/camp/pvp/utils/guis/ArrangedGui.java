@@ -22,8 +22,6 @@ public class ArrangedGui extends StandardGui{
 
     private void arrangeButtons() {
 
-        List<Integer> skipNumbers = Arrays.asList(0, 8, 9, 17, 18, 26, 27, 35, 36, 44, 45, 53);
-
         Queue<GuiButton> buttonQueue = new LinkedList<>(getButtons());
 
         int count = 0, divisor = isBorder() ? 7 : 9, buttonSize = 0;
@@ -60,7 +58,7 @@ public class ArrangedGui extends StandardGui{
 
         for (int i = startFrom; i < 54; i++) {
 
-            if(isBorder() && skipNumbers.contains(i)) continue;
+            if(isBorder() && (i % 9 == 0 || (i + 1) % 9 == 0)) continue;
 
             if(buttonQueue.isEmpty()) break;
 

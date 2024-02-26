@@ -1,5 +1,4 @@
 main: camp.pvp.utils.Gooey2
 version: ${git.branch}-${git.commit.id.abbrev}
 name: Gooey2
-description: An easy to use GUI library for Bukkit.
 author: leuo

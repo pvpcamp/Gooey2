@@ -4,6 +4,7 @@ import camp.pvp.utils.guis.Gui;
 import lombok.Getter;
 import lombok.Setter;
 import camp.pvp.utils.buttons.GuiButton;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -16,6 +17,7 @@ public class PaginatedGui extends Gui {
     private @Getter @Setter int currentPage;
     private @Getter @Setter GuiButton nextPageButton, previousPageButton;
     private @Getter List<GuiButton> navigationButtons = new ArrayList<>();
+    private @Getter @Setter boolean border;
 
     /***
      * Creates a new GUI and imports it into the Gooey2 list.
@@ -25,33 +27,27 @@ public class PaginatedGui extends Gui {
     public PaginatedGui(String name, int slots) {
         super(name, slots);
 
-        this.nextPageButton = new GuiButton(Material.ARROW);
-        this.nextPageButton.setAction(new GuiNextPageAction());
-        this.nextPageButton.setButtonUpdater((button, gui) -> {
-            if(gui instanceof PaginatedGui) {
-                PaginatedGui pgui = (PaginatedGui) gui;
-                if(pgui.getCurrentPage() + 1 < getPages()) {
-                    button.updateName("&aPage " + (pgui.getCurrentPage() + 2));
-                } else {
-                    button.updateName("&cFinal page reached.");
-                }
+        nextPageButton = new GuiButton(Material.ARROW, "&6&lNext Page");
+        nextPageButton.setAction(new GuiNextPageAction());
+        nextPageButton.setButtonUpdater((button, gui) -> {
+            if(gui instanceof PaginatedGui paginatedGui) {
+                int newPage = paginatedGui.getCurrentPage() + 2;
+                button.setLore("&7Click to go to page &f" + newPage + "&7.");
             }
         });
 
-        this.previousPageButton = new GuiButton(Material.ARROW);
-        this.previousPageButton.setAction(new GuiPreviousPageAction());
-        this.previousPageButton.setButtonUpdater((button, gui) -> {
-            if(gui instanceof PaginatedGui) {
-                PaginatedGui pgui = (PaginatedGui) gui;
-                if(pgui.getCurrentPage() == 0) {
-                    button.updateName("&cFinal page reached.");
-                } else {
-                    button.updateName("&aPage " + (pgui.getCurrentPage()));
-                }
+        previousPageButton = new GuiButton(Material.ARROW, "&6&lPrevious Page");
+        previousPageButton.setAction(new GuiPreviousPageAction());
+        previousPageButton.setButtonUpdater((button, gui) -> {
+            if(gui instanceof PaginatedGui paginatedGui) {
+                int newPage = paginatedGui.getCurrentPage();
+                button.setLore("&7Click to go to page &f" + newPage + "&7.");
             }
         });
 
         this.currentPage = 0;
+
+        setDefaultBackground();
     }
 
     /***
@@ -65,61 +61,91 @@ public class PaginatedGui extends Gui {
     @Override
     public GuiButton getButton(int slot) {
         if(slot < 9) {
-            switch(slot) {
-                case 0:
-                    return previousPageButton;
-                case 8:
-                    return nextPageButton;
-                default:
-                    for(GuiButton button : getNavigationButtons()) {
-                        if(button.getSlot() == slot) {
-                            return button;
-                        }
-                    }
-            }
+            if(slot == 0) return previousPageButton;
+            if(slot == 8) return nextPageButton;
+
+            return navigationButtons.stream().filter(button -> button.getSlot() == slot).findFirst().orElse(null);
         } else {
-            int start = slot + (currentPage * (this.getSlots() - 9));
-            if(buttons.size() > start - 9) {
-                return buttons.get(start - 9);
+            // Declares where to start looking for buttons in the list.
+            int startPos = getButtonsPerPage() * currentPage;
+            int s = slot - 9;
+            if(border) {
+                // If the border is enabled, we need to skip the border slots.
+                if(slot == 9 || s % 9 == 0 || (s + 1) % 9 == 0) return null;
+
+                // Adjustment to fix the slot number.
+                s--;
+
+
+                // If the slot is in the first or last column, we need to adjust the slot number.
+                for(int i = 8; i < slot - 9; i++) {
+                    if(i % 9 == 0 || (i + 1) % 9 == 0) {
+                        s--;
+                    }
+                }
             }
+
+            int buttonNumber = s + startPos;
+
+            if(buttonNumber >= getButtons().size()) return null;
+
+            return getButtons().get(s + (currentPage * getButtonsPerPage()));
         }
-        return null;
     }
 
     @Override
     public void updateGui() {
 
-        final int totalPages = getPages();
-
         getInventory().clear();
 
-        int start = currentPage * (this.getSlots() - 9);
-        for(int i = 0; i < this.getSlots() - 9; i++) {
-            if(getButtons().size() > start + i) {
-                GuiButton button = getButtons().get(start + i);
+        final int totalPages = getPages();
+        final int rows = getSlots() / 9;
 
-                if(button != null) {
-                    if(button.getButtonUpdater() != null) {
-                        button.getButtonUpdater().update(button, this);
+        if(border) {
+            // Form the border from the background item.
+            for (int row = 0; row < rows; row++) {
+                for (int column = 0; column < 9; column++) {
+                    int slot = (row * 9) + column;
+                    if (row == 0 || row + 1 == rows) {
+                        if (getInventory().getItem(slot) == null) {
+                            getInventory().setItem((row * 9) + column, getBackground());
+                        }
+                        continue;
                     }
 
-                    getInventory().setItem(i + 9, button);
-                } else {
-                    break;
+                    if (column == 0 || column == 8) {
+                        if (getInventory().getItem(slot) == null) {
+                            getInventory().setItem(slot, getBackground());
+                        }
+                    }
                 }
-            } else {
-                break;
+            }
+        } else {
+            // If border is not enabled, just fill the top row with the background item to
+            // make it look like a navigation bar.
+            for(int x = 0; x < 9; x++) {
+                getInventory().setItem(x, getBackground());
             }
         }
 
-        for(int x = 0; x < 9; x++) {
-            ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE);
-            item.setDurability((short) 15);
-            ItemMeta meta = item.getItemMeta();
-            meta.setDisplayName(" ");
-            item.setItemMeta(meta);
 
-            getInventory().setItem(x, item);
+        // Set the buttons in their positions.
+        int buttonSlots = border ? getSlots() - 9 : getSlots();
+        int buttonNumber = currentPage * getButtonsPerPage();
+        for(int x = 9; x < buttonSlots; x++) {
+            // Skip slots where the border sits.
+            if(border && (x % 9 == 0 || (x + 1) % 9 == 0)) continue;
+
+            if(getButtons().size() <= buttonNumber) break;
+
+            GuiButton button = getButtons().get(buttonNumber);
+
+            if(button.getButtonUpdater() != null) {
+                button.getButtonUpdater().update(button, this);
+            }
+
+            getInventory().setItem(x, button);
+            buttonNumber++;
         }
 
         for(GuiButton button : getNavigationButtons()) {
@@ -138,14 +164,21 @@ public class PaginatedGui extends Gui {
         }
     }
 
+    /***
+     * Calculates the total number of pages.
+     */
     public int getPages() {
         int i = 0;
-        while(i * (this.getSlots() - 9) < this.getButtons().size()) {
+        while(i * getButtonsPerPage() < this.getButtons().size()) {
             i++;
         }
         return i;
     }
 
+    /***
+     * Goes to the specified page, then calls {@link #updateGui()}.
+     * @param page
+     */
     public void goToPage(int page) {
         currentPage = page;
         updateGui();
@@ -167,5 +200,15 @@ public class PaginatedGui extends Gui {
         } else {
             return false;
         }
+    }
+
+    /***
+     * This number can change based on the border and navigation bar.
+     * @return Number of buttons that can fit on a single page.
+     */
+    private int getButtonsPerPage() {
+        int slots = getSlots() - 9;
+        int rows = slots / 9;
+        return border ? (slots - 9) - ((rows - 1) * 2) : slots;
     }
 }
